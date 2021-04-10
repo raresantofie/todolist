@@ -10,13 +10,13 @@ import com.todlist.todlist.services.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 public class ItemController {
 
-    private ItemService itemService;
+    private final ItemService itemService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
@@ -57,7 +57,7 @@ public class ItemController {
     }
 
     /**
-     * @param dbItem - Obiectul din baza de date pe care urmeaza sa il updatam
+     * @param dbItem         - Obiectul din baza de date pe care urmeaza sa il updatam
      * @param requestItemDto - Obiectul din Postman / UI care contine field-urile pe care vrem sa le updatam
      * @return obiectul din baza de date cu noile valori
      */
@@ -70,6 +70,22 @@ public class ItemController {
         }
         if (requestItemDto.getItemStatus() != null) {
             dbItem.setItemStatus(requestItemDto.getItemStatus());
+            if (requestItemDto.getItemStatus().equals(ItemStatus.NOT_STARTED)) {
+                dbItem.setStartDate(null);
+                dbItem.setEndDate(null);
+            }
+            if (requestItemDto.getItemStatus().equals(ItemStatus.IN_PROGRESS)) {
+                // mutam task-ul in progress
+                // din greseala il mutam in done
+                // din done, vrem sa il mutam inapoi in progress
+                if (dbItem.getStartDate() == null) {
+                    dbItem.setStartDate(new Date());
+                }
+                dbItem.setEndDate(null);
+            }
+            if (requestItemDto.getItemStatus().equals(ItemStatus.DONE)) {
+                dbItem.setEndDate(new Date());
+            }
         }
         return dbItem;
     }

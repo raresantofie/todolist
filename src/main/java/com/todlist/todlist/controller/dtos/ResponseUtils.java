@@ -1,9 +1,12 @@
 package com.todlist.todlist.controller.dtos;
 
 import com.todlist.todlist.model.Item;
+import com.todlist.todlist.model.ItemStatus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ResponseUtils {
 
@@ -14,6 +17,11 @@ public class ResponseUtils {
         if (item.getItemGroup() != null) {
             responseItemDto.setAssignedToItemGroupId(item.getItemGroup().getId());
             responseItemDto.setAssignedToItemGroupName(item.getItemGroup().getItemGroupName());
+        }
+        if (item.getItemStatus().equals(ItemStatus.DONE)) {
+            long diffInMilliseconds = item.getEndDate().getTime() - item.getStartDate().getTime();
+            long diffInSeconds = TimeUnit.SECONDS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS);
+            responseItemDto.setDuration(String.format("Took %d seconds(s)", diffInSeconds));
         }
         return responseItemDto;
     }

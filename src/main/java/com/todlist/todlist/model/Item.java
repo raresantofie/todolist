@@ -35,6 +35,9 @@ public class Item {
     @JoinColumn(name = "itemGroup_id")
     private ItemGroup itemGroup;
 
+    private Date startDate;
+    private Date endDate;
+
     public Item() {
     }
 
@@ -82,5 +85,21 @@ public class Item {
 
     public void setItemStatus(ItemStatus itemStatus) {
         this.itemStatus = itemStatus;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }
