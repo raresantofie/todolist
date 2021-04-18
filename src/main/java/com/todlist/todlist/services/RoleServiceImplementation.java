@@ -6,6 +6,8 @@ import com.todlist.todlist.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class RoleServiceImplementation implements RoleService {
@@ -29,5 +31,10 @@ public class RoleServiceImplementation implements RoleService {
     @Override
     public Role findByRoleName(String roleName) {
         return roleRepository.findByRole(roleName);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 }

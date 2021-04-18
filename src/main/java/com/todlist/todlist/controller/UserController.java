@@ -7,10 +7,12 @@ import com.todlist.todlist.model.User;
 import com.todlist.todlist.services.RoleService;
 import com.todlist.todlist.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +32,11 @@ public class UserController {
     public User create(@RequestBody RequestUserDto requestUserDto) {
         User user = mapRequestUserDtoToUser(requestUserDto);
         return userService.create(user);
+    }
+
+    @GetMapping(path = "/logged-user")
+    public Principal getLoggedUsername(Principal principal){
+        return principal;
     }
 
     // map{fromType}to{Type}

@@ -3,6 +3,7 @@ package com.todlist.todlist.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -33,9 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable() //
                 .cors().disable() //
                 .authorizeRequests() // localhost:8080/hello | localhost:8080/bye
+//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/roles").permitAll()
                 .antMatchers("/roles/**").permitAll()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/logged-user").permitAll()
                 .antMatchers("/test/public").permitAll()
                 .antMatchers("/test/private").authenticated()
                 .antMatchers("/test/manager").hasAuthority("MANAGER")
