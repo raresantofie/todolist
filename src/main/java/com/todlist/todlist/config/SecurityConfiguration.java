@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable() //
                 .cors().disable() //
                 .authorizeRequests() // localhost:8080/hello | localhost:8080/bye
-//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/roles").permitAll()
                 .antMatchers("/roles/**").permitAll()
                 .antMatchers("/register").permitAll()
